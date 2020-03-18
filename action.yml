@@ -8,7 +8,7 @@ inputs:
   alias:
     description: 'The alias that runs -m datomic.ion.dev'
     required: true
-    default: :ion-dev
+    default: ':ion-dev'
   compute-group:
     description: 'The datomic compute group to deploy the ions to'
     required: true
