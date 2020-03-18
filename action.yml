@@ -1,0 +1,41 @@
+name: datomic-ions-deploy
+author: 'Stijn Opheide'
+description: 'Deploy Datomic ions to Datomic Cloud.'
+branding:
+  icon: upload-cloud
+  color: blue
+inputs:
+  alias:
+    description: 'The alias that runs -m datomic.ion.dev'
+    required: true
+    default: :ion-dev
+  compute-group:
+    description: 'The datomic compute group to deploy the ions to'
+    required: true
+  aws-region:
+    description: 'The AWS region of your datomic cloud system'
+    required: true
+  aws-access-key-id:
+    description: 'The AWS_ACCESS_KEY_ID to use for authentication'
+    required: true
+  aws-secret-access-key:
+    description: 'The AWS_SECRET_ACCESS_KEY to use for authentication'
+    required: true
+  working-directory:
+    description: 'Directory containing the ions code'
+    required: false
+    default: './'
+  ssh-key:
+    description: 'GitHub secret with the SSH private key to access your private repositories'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.alias }}
+    - ${{ inputs.compute-group }}
+    - ${{ inputs.aws-region }}
+    - ${{ inputs.aws-access-key-id }}
+    - ${{ inputs.aws-secret-access-key }}
+    - ${{ inputs.working-directory }}
+    - ${{ inputs.ssh-key }}
