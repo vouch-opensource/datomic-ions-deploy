@@ -28,7 +28,7 @@ Note: Since the action is not interactive, it invokes the CLI via `clojure` rath
 
 **Default:** no SSH agent is started or key used
 
-### Why an SSH key?
+#### Why an SSH key?
 When running this action clojure tools.deps might need to fetch dependencies from your other private repositories, which uses the ssh-agent to authenticate.
 
 GitHub Actions only have access to the repository they run for. To access additional private repositories you need to provide an SSH key with sufficient access privileges.
@@ -37,13 +37,25 @@ _Please note that there are some other actions on the GitHub marketplace that en
 
 **For security purposes, we do not expose the SSH agent outside of this action.**
 
-### SSH Setup
+#### SSH Setup
 1. Create an SSH key with sufficient access privileges. For security reasons, don't use your personal SSH key but set up a dedicated one for use in GitHub Actions. See the [Github documentation](https://developer.github.com/v3/guides/managing-deploy-keys/) for more support.
 1. Make sure you **don't have a passphrase** set on the private key.
 1. In your repository, go to the _Settings > Secrets_ menu and create a new secret. In this example, we'll call it `SSH_PRIVATE_KEY`. Put the contents of the private SSH key file into the contents field.
 1. This key must start with `-----BEGIN ... PRIVATE KEY-----`, consist of many lines and ends with `-----END ... PRIVATE KEY-----`.
 
-### AWS IAM permissions
+### `aws-region`
+
+**Required**: The AWS region of your datomic cloud system
+
+### `aws-access-key-id`
+
+**Required**: The AWS_ACCESS_KEY_ID to use for authentication
+
+### `aws-secret-access-key`
+
+**Required**: The AWS_SECRET_ACCESS_KEY to use for authentication
+
+#### AWS IAM permissions
 
 Make sure that the AWS access keys you are providing to the action have an IAM policy containing at least the following permissions.
 
@@ -131,6 +143,12 @@ Make sure that the AWS access keys you are providing to the action have an IAM p
     ]
 }
 ```
+
+### `working-directory`
+
+**Optional**: Directory containing the ions code
+
+**Default**: `./`
 
 ## Example usage
 
