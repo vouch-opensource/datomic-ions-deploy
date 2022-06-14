@@ -177,7 +177,7 @@ When you need to fetch private gitlibs with tools.deps, use `ssh-key`
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
     compute-group: ${{ env.DATOMIC_COMPUTE_GROUP }}
-	app-name: ${{ env.APP_NAME }}
+    app-name: ${{ env.APP_NAME }}
     aws-region: ${{ env.AWS_REGION }}
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -192,7 +192,7 @@ When you need to fetch private gitlibs with tools.deps, use `ssh-key`
   with:
     alias: :dev
     compute-group: ${{ env.DATOMIC_COMPUTE_GROUP }}
-	app-name: ${{ env.APP_NAME }}
+    app-name: ${{ env.APP_NAME }}
     aws-region: ${{ env.AWS_REGION }}
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -222,7 +222,7 @@ the ions code that is stored in another repository.
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
     compute-group: ${{ env.DATOMIC_COMPUTE_GROUP }}
-	app-name: ${{ env.APP_NAME }}
+    app-name: ${{ env.APP_NAME }}
     working-dir: my-ions-repo
     aws-region: ${{ env.AWS_REGION }}
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
