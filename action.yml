@@ -1,9 +1,9 @@
 name: datomic-ions-deploy
-author: 'Pieter Breed'
-description: 'Deploy Datomic ions to Datomic Cloud. Forked from (https://github.com/vouch-opensource/datomic-ions-deploy) by Stijn Opheide'
+author: 'Stijn Opheide'
+description: 'Deploy Datomic ions to Datomic Cloud.'
 branding:
   icon: upload-cloud
-  color: red
+  color: blue
 inputs:
   alias:
     description: 'The alias that runs -m datomic.ion.dev'
