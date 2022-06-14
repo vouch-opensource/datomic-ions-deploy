@@ -16,7 +16,8 @@ export AWS_REGION=$3
 export AWS_ACCESS_KEY_ID=$4
 export AWS_SECRET_ACCESS_KEY=$5
 WORKING_DIR=$6
-SSH_KEY=$7
+APP_NAME=$7
+SSH_KEY=$8
 
 ## Setup SSH Agent
 if [[ -n $SSH_KEY ]]
@@ -45,8 +46,8 @@ a_Opts="-A$aliases"
 function get_version {
   # Get the currently deployed version of the ions repo
   aws deploy get-deployment --deployment-id \
-    $(aws deploy list-deployments --application-name vouch --deployment-group-name $1 --include-only-statuses Succeeded --no-paginate --query "deployments[0]" --output text) \
-    --query "deploymentInfo.revision.s3Location.key" --output text | sed 's|^datomic/apps/vouch/stable/\(.*\).zip|\1|'
+    $(aws deploy list-deployments --application-name $2 --deployment-group-name $1 --include-only-statuses Succeeded --no-paginate --query "deployments[0]" --output text) \
+    --query "deploymentInfo.revision.s3Location.key" --output text | sed 's|^datomic/apps/.*/stable/\(.*\).zip|\1|'
 }
 
 function push {
@@ -100,7 +101,7 @@ function deploy {
   waitUntilDeployed "$1_$SHA"
 }
 
-if [[ $SHA != $(get_version $COMPUTE_GROUP) ]]; then
+if [[ $SHA != $(get_version $COMPUTE_GROUP $APP_NAME) ]]; then
   push
   deploy $COMPUTE_GROUP
 fi
