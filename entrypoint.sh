@@ -57,10 +57,6 @@ function push {
 
 function getDeployStatus() {
   # Retrieve the status of the current deployment
-  # STATUS_COMMAND=$(clojure bin/parse-status-command.clj .deploys/$1)
-  # STATUS_EDN=$(eval $STATUS_COMMAND | tr -d '\n')
-  # clojure bin/parse-status.clj "$STATUS_EDN"
-
   STATUS_COMMAND=$(jet -q ':status-command' -o json < .deploys/$1 | jq -r)
   eval $STATUS_COMMAND | jet -q ':deploy-status' -o json | jq -r
 }
