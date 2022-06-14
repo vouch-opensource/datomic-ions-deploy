@@ -22,6 +22,10 @@ Note: Since the action is not interactive, it invokes the CLI via `clojure` rath
 
 **Required:** The compute group to which the ions should be deployed
 
+### `app-name`
+
+**Required**: The name of the datomic cloud stack.
+
 ### `ssh-key`
 
 **Optional:** A GitHub secret that has the The SSH key needed to access code from other private repositories (eg `${{ secrets.SSH_PRIVATE_KEY }}`)
