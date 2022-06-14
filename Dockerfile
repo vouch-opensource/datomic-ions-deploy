@@ -9,7 +9,10 @@ RUN unzip -q awscliv2.zip
 
 FROM vouchio/clj-jdk8-alpine:1.10.1
 
-RUN apk add --update --no-cache openssh git
+RUN apk add --update --no-cache openssh git jq curl
+RUN curl -s https://raw.githubusercontent.com/borkdude/jet/master/install -o install_jet && \
+    chmod +x ./install_jet && \
+    ./install_jet
 
 COPY --from=download-aws /aws /aws
 WORKDIR /aws
