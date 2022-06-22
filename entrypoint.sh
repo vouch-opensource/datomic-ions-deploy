@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
+# print jet version
 jet -v
 
 # Github Actions sets the home directory to /github/home which is not what the ions deploy tools expect
@@ -73,7 +75,7 @@ function waitUntilDeployed() {
 
   status=$(getDeployStatus $1)
 
-  while [[ ($status != "SUCCEEDED") && ($iterations -lt $max_iterations_count) ]]; do
+  while [[ ".$status" != ".SUCCEEDED" && ($iterations -lt $max_iterations_count) ]]; do
     sleep $sleep_time_seconds
     status=$(getDeployStatus $1)
     echo "Deploy $status"
