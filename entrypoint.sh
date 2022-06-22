@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -e
-set -x
 
 jet -v
 
@@ -62,7 +61,7 @@ function getDeployStatus() {
   # Retrieve the status of the current deployment
   STATUS_COMMAND=$(jet -q ':status-command println' < .deploys/$1)
   eval $STATUS_COMMAND > ".deploys/$1_status_output"
-  cat ".deploys/$1_status_output"
+  # cat ".deploys/$1_status_output"
   jet -q ':deploy-status println' < ".deploys/$1_status_output"
 }
 
@@ -96,7 +95,7 @@ function deploy {
 
   if [ $? -eq 0 ]; then
     echo $CLJ_OUTPUT >.deploys/$1_$SHA
-    cat .deploys/$1_$SHA
+    # cat .deploys/$1_$SHA
     set -e
   else
     echo $CLJ_OUTPUT
