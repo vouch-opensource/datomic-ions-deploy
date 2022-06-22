@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+set -x
 
 # Github Actions sets the home directory to /github/home which is not what the ions deploy tools expect
 # when using tools.deps gitlibs.
