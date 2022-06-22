@@ -3,6 +3,8 @@
 set -e
 set -x
 
+jet -v
+
 # Github Actions sets the home directory to /github/home which is not what the ions deploy tools expect
 # when using tools.deps gitlibs.
 # This is a work-around and might be removed when a solution is provided in ions deploy tools.
@@ -92,6 +94,7 @@ function deploy {
 
   if [ $? -eq 0 ]; then
     echo $CLJ_OUTPUT >.deploys/$1_$SHA
+    cat .deploys/$1_$SHA
     set -e
   else
     echo $CLJ_OUTPUT
