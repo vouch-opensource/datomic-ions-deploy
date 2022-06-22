@@ -61,7 +61,9 @@ function push {
 function getDeployStatus() {
   # Retrieve the status of the current deployment
   STATUS_COMMAND=$(jet -q ':status-command println' < .deploys/$1)
-  eval $STATUS_COMMAND | jet -q ':deploy-status println'
+  eval $STATUS_COMMAND > ".deploys/$1_status_output"
+  cat ".deploys/$1_status_output"
+  jet -q ':deploy-status println' < ".deploys/$1_status_output"
 }
 
 function waitUntilDeployed() {
