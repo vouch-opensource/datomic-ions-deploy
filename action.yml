@@ -28,6 +28,9 @@ inputs:
   ssh-key:
     description: 'GitHub secret with the SSH private key to access your private repositories'
     required: false
+  app-name:
+    description: "The datomic app name specified with the CloudFormation stack"
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -38,4 +41,5 @@ runs:
     - ${{ inputs.aws-access-key-id }}
     - ${{ inputs.aws-secret-access-key }}
     - ${{ inputs.working-directory }}
+    - ${{ inputs.app-name }}
     - ${{ inputs.ssh-key }}

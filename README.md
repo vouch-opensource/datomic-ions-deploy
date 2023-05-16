@@ -22,6 +22,10 @@ Note: Since the action is not interactive, it invokes the CLI via `clojure` rath
 
 **Required:** The compute group to which the ions should be deployed
 
+### `app-name`
+
+**Required**: The name of the datomic cloud stack.
+
 ### `ssh-key`
 
 **Optional:** A GitHub secret that has the The SSH key needed to access code from other private repositories (eg `${{ secrets.SSH_PRIVATE_KEY }}`)
@@ -173,6 +177,7 @@ When you need to fetch private gitlibs with tools.deps, use `ssh-key`
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
     compute-group: ${{ env.DATOMIC_COMPUTE_GROUP }}
+    app-name: ${{ env.APP_NAME }}
     aws-region: ${{ env.AWS_REGION }}
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -187,6 +192,7 @@ When you need to fetch private gitlibs with tools.deps, use `ssh-key`
   with:
     alias: :dev
     compute-group: ${{ env.DATOMIC_COMPUTE_GROUP }}
+    app-name: ${{ env.APP_NAME }}
     aws-region: ${{ env.AWS_REGION }}
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -216,6 +222,7 @@ the ions code that is stored in another repository.
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
     compute-group: ${{ env.DATOMIC_COMPUTE_GROUP }}
+    app-name: ${{ env.APP_NAME }}
     working-dir: my-ions-repo
     aws-region: ${{ env.AWS_REGION }}
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
