@@ -26,6 +26,18 @@ Note: Since the action is not interactive, it invokes the CLI via `clojure` rath
 
 **Required**: The name of the datomic cloud stack.
 
+### `uname`
+
+**Optional:** The [unreproducible name](https://docs.datomic.com/cloud/ions/ions-reference.html#unreproducible) for the push.
+
+### `maven-settings`
+
+**Optional:** The path to a custom maven settings.xml. Useful if you reference dependencies in a private maven repository.
+
+### `maven-repository`
+
+**Optional:** The path to your custom maven repository (eg "/github/workspace/.m2/repository"). Useful when used in combination with the [Cache Action](https://github.com/marketplace/actions/cache) in order to be able to specify a path to the maven repository visible outside this docker container.
+
 ### `ssh-key`
 
 **Optional:** A GitHub secret that has the The SSH key needed to access code from other private repositories (eg `${{ secrets.SSH_PRIVATE_KEY }}`)
@@ -158,7 +170,7 @@ Make sure that the AWS access keys you are providing to the action have an IAM p
 
 ### default, to run `:ion-dev` alias
 
-```yaml 
+```yaml
 - name: Deploy Datomic ions
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
@@ -172,7 +184,7 @@ Make sure that the AWS access keys you are providing to the action have an IAM p
 
 When you need to fetch private gitlibs with tools.deps, use `ssh-key`
 
-```yaml 
+```yaml
 - name: Deploy Datomic ions
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
@@ -186,7 +198,7 @@ When you need to fetch private gitlibs with tools.deps, use `ssh-key`
 
 ### with an alternative alias
 
-```yaml 
+```yaml
 - name: Deploy Datomic ions
   uses: actions/datomic-ions-deploy@v0.1.0
   with:
@@ -200,13 +212,13 @@ When you need to fetch private gitlibs with tools.deps, use `ssh-key`
 
 ### with a different working directory
 
-In case you want to use this action in a repository that has the ions code in a directory other than the root, 
-use the `working-dir` parameter. 
+In case you want to use this action in a repository that has the ions code in a directory other than the root,
+use the `working-dir` parameter.
 
 Another use case might be that you have a github workflow that needs to run tests against a specific version of
 the ions code that is stored in another repository.
 
-```yaml 
+```yaml
 - uses: actions/checkout@v2
 
 # Checkout the ions code from another repository
@@ -233,4 +245,3 @@ the ions code that is stored in another repository.
 
 # License
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
-

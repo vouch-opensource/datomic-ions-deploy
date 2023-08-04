@@ -31,6 +31,15 @@ inputs:
   app-name:
     description: "The datomic app name specified with the CloudFormation stack"
     required: true
+  uname:
+    description: "The uname for this deploy"
+    required: false
+  maven-settings:
+    description: "The path to maven settings.xml"
+    required: false
+  maven-repository:
+    description: "The path to maven repository"
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -43,3 +52,6 @@ runs:
     - ${{ inputs.working-directory }}
     - ${{ inputs.app-name }}
     - ${{ inputs.ssh-key }}
+    - ${{ inputs.uname }}
+    - ${{ inputs.maven-settings}}
+    - ${{ inputs.maven-repository}}
