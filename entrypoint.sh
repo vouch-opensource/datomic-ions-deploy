@@ -21,6 +21,21 @@ export AWS_SECRET_ACCESS_KEY=$5
 WORKING_DIR=$6
 APP_NAME=$7
 SSH_KEY=$8
+UNAME=$9
+MAVEN_SETTINGS=${10}
+MAVEN_REPOSITORY=${11}
+
+## Setup maven settings
+if [[ -n $MAVEN_SETTINGS ]]; then
+  cp $MAVEN_SETTINGS $HOME/.m2/settings.xml
+fi
+
+## Setup maven repository
+if [[ -n $MAVEN_REPOSITORY ]]; then
+    rm -rf $HOME/.m2/repository
+    mkdir -p $MAVEN_REPOSITORY
+    mv $MAVEN_REPOSITORY $HOME/.m2/repository
+fi
 
 ## Setup SSH Agent
 if [[ -n $SSH_KEY ]]
@@ -55,7 +70,12 @@ function get_version {
 
 function push {
   # Push the ions code to AWS
-  clojure $a_Opts "{:op :push :region $AWS_REGION}"
+
+  if [[ -n $UNAME ]]; then
+    clojure $a_Opts "{:op :push :region $AWS_REGION :uname $UNAME}"
+  else
+    clojure $a_Opts "{:op :push :region $AWS_REGION}"
+  fi
 }
 
 function getDeployStatus() {
@@ -92,7 +112,11 @@ function deploy {
 
   ## if this fails, print out the error instead of sending it to the file
   set +e
-  CLJ_OUTPUT=$(clojure -Sforce -A:ion-dev "{:op :deploy, :region $AWS_REGION, :group $1, :rev \"$SHA\"}")
+  if [[ -n $UNAME ]]; then
+      CLJ_OUTPUT=$(clojure -Sforce -A:ion-dev "{:op :deploy, :region $AWS_REGION, :group $1, :uname \"$UNAME\"}")
+  else
+      CLJ_OUTPUT=$(clojure -Sforce -A:ion-dev "{:op :deploy, :region $AWS_REGION, :group $1, :rev \"$SHA\"}")
+  fi
 
   if [ $? -eq 0 ]; then
     echo $CLJ_OUTPUT >.deploys/$1_$SHA
@@ -106,7 +130,17 @@ function deploy {
   waitUntilDeployed "$1_$SHA"
 }
 
+function prepare-maven-cache {
+
+  if [[ -n $MAVEN_REPOSITORY ]]; then
+    rm -rf $MAVEN_REPOSITORY
+    mv $HOME/.m2/repository $MAVEN_REPOSITORY
+  fi
+
+}
+
 if [[ $SHA != $(get_version $COMPUTE_GROUP $APP_NAME) ]]; then
   push
   deploy $COMPUTE_GROUP
+  prepare-maven-cache
 fi
